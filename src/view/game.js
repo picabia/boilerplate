@@ -18,12 +18,16 @@ class GameView extends View {
     }
 
     const oscillatingNumber = this._wave(timestamp);
-    this._camera.setAngle(oscillatingNumber);
+    this._camera.setRotation(oscillatingNumber);
 
     const renderer = this._renderer;
 
-    renderer.fillRect(0, 0, 10, 10);
-    renderer.fillRect(50, 50, 10, 10);
+    renderer.moveTo(-500, 0);
+    renderer.lineTo(500, 0);
+    renderer.stroke();
+
+    renderer.strokeRect(-50, -50, 100, 100);
+    renderer.fillRect(-50, 50, 100, 100);
   }
 }
 
