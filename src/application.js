@@ -14,8 +14,7 @@ class Application {
     // -- view
 
     const containerOptions = {
-      mode: 'contain',
-      ratio: 4 / 3,
+      mode: 'cover',
       maxPixels: 1500 * 1500
     };
     this._container = new Container('main', this._dom, containerOptions);
@@ -29,9 +28,15 @@ class Application {
     this._viewport = new Viewport('camera', viewportOptions);
     this._vm.addViewport(this._viewport);
 
-    this._container.on('resize', (size) => {
+    this._container.on('resize', (size) => {      
       this._viewport.setSize(size);
-      this._viewport.setScale(1);
+      if (this._container._ratio >= 1) {
+        this._viewport.setScale(size.h / 1000);
+        this._viewport.setAngle(Math.PI / 2);
+      } else {
+        this._viewport.setScale(size.w / 1000);
+        this._viewport.setAngle(0);
+      }
     });
 
     this._vm.addRenderer(new CanvasRenderer2d('2d'));
