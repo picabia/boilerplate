@@ -19,12 +19,10 @@ class GameModel extends Model {
   // -- model
 
   _init () {
-
     // this._player = new PlayerModel();
     // this._addChild(this._player);
     // this._someController.addObject(this._player);
     // this._emitter.emit('new-player', this._player);
-
   }
 
   _destroy () {
