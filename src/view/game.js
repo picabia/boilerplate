@@ -3,25 +3,27 @@ import { View, Wave } from '@picabia/picabia';
 import { BgView } from './bg';
 
 class GameView extends View {
-  _constructor (game) {
+  constructor (v, target, game) {
+    super(v, target);
     this._game = game;
-    this._camera = this._vm.getViewport('camera');
 
-    this._createChild(BgView, [], '2d', 'camera', 'layer-1');
+    this._viewport = this._v.get('viewport:camera');
+
+    this._createChild(BgView, { layer: 'bg' });
 
     this._game.on('new-player', (player) => {
 
     });
   }
 
-  _preRender (delta, timestamp) {
+  _preUpdate () {
     if (!this._wave) {
-      this._wave = Wave.sine(timestamp, 0, Math.PI / 4, 5000);
+      this._wave = Wave.sine(this._time.t, 0, Math.PI / 4, 5000);
     }
 
-    const oscillatingNumber = this._wave(timestamp);
-    this._camera.setRotation(oscillatingNumber);
-    this._camera.setZoom(1 - Math.abs(oscillatingNumber / 2));
+    const oscillatingNumber = this._wave(this._time);
+    this._viewport.setRotation(oscillatingNumber);
+    this._viewport.setZoom(1 - Math.abs(oscillatingNumber / 2));
   }
 }
 
